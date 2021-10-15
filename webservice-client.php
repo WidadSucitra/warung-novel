@@ -11,9 +11,9 @@
 	$response = '';
 	$wsdl = "http://localhost/warung-novel/webservice-server.php?wsdl";
 	if(isset($_POST['sub'])){
-		$isbn = trim($_POST['isbn']);
-		if(!$isbn){
-			$error = 'ISBN cannot be left blank.';
+		$title = trim($_POST['title']);
+		if(!$title){
+			$error = 'Tittle cannot be left blank.';
 		}
 
 		if(!$error){
@@ -26,7 +26,7 @@
 			    exit();
 			}
 			 try {
-				$result = $client->call('fetchBookData', array($isbn));
+				$result = $client->call('fetchBookData', array($title));
 				$result = json_decode($result);
 			  }catch (Exception $e) {
 			    echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -39,44 +39,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Book Store Web Service</title>
+  <title>Warung Novel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Style CSS -->
+	<link rel="stylesheet" href="style.css">
+
+  <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body class="untuk-bg">
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+  <h1>⋆｡˚Warung Novel˚｡⋆｡</h1>
+    <h3 class="display-4"><br>Jelajahi Dunia <br>Dengan Membaca Buku</h3>
+  </div>
+</div>
 
 <div class="container">
-  <h2>Books Store SOAP Web Service</h2>
-  <p>Enter <strong>ISBN</strong> of book and click <strong>Fetch Book Information</strong> button.</p>
-  <br />       
-  <div class='row'>
-  	<form class="form-inline" method = 'post' name='form1'>
-  		<?php if($error) { ?> 
-	    	<div class="alert alert-danger fade in">
-    			<a href="#" class="close" data-dismiss="alert">&times;</a>
-    			<strong>Error!</strong>&nbsp;<?php echo $error; ?> 
-	        </div>
-		<?php } ?>
-	    <div class="form-group">
-	      <label for="email">ISBN:</label>
-	      <input type="text" class="form-control" name="isbn" id="isbn" placeholder="Enter ISBN" required>
-	    </div>
-	    <button type="submit" name='sub' class="btn btn-default">Fetch Book Information</button>
-    </form>
-   </div>
-   <br />
-   <h2>Book Information</h2>
+  <div class="cari">
+	  <p>Masukkan <strong>Judul</strong> Novel untuk Mendapatkan Informasi <strong>Harga</strong></p>
+	  <br />       
+	  <div class='row'>
+		  <form class="form-inline" method = 'post' name='form1'>
+			  <?php if($error) { ?> 
+				<div class="alert alert-danger fade in">
+					<a href="#" class="close" data-dismiss="alert">&times;</a>
+					<strong>Error!</strong>&nbsp;<?php echo $error; ?> 
+				</div>
+			<?php } ?>
+			<div class="form-group">
+			  <label for="email">Judul:</label>
+			  <input type="text" class="form-control" name="title" id="title" placeholder="Masukkan Judul" required>
+			</div>
+			<button type="submit" name='sub' class="btn btn-default">Cek Harga</button>
+		</form>
+	   </div>
+	   <br />
+  </div>
+   <h2>Informasi Novel</h2>
   <table class="table">
     <thead>
       <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Price</th>
+        <th>Judul</th>
+        <th>Penulis</th>
+        <th>Harga</th>
         <th>ISBN</th>
-        <th>Category</th>
+        <th>Genre</th>
       </tr>
     </thead>
     <tbody>
@@ -92,7 +104,7 @@
       <?php 
   		}else{ ?>
   			<tr>
-		        <td colspan='5'>Enter ISBN and click on Fetch Book Information button</td>
+		        <td colspan='5'>Belum Ada Hasil</td>
 		      </tr>
   		<?php } ?>
     </tbody>

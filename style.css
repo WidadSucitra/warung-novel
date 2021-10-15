@@ -1,0 +1,27 @@
+body.untuk-bg{
+    background-color: #e9e5e4;
+}
+nav a.navbar-brand{
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.jumbotron{
+    height: 300px;
+    background-image: url("jumbotron.jpg");
+    background-repeat: no-repeat;
+    background-position:44% 90%;
+}
+
+.jumbotron h3{
+    padding-left: 100px;
+}
+
+.cari{
+    margin-top: 50px;
+    text-align: center;
+}
+
+.table thead tr{
+    background-color: #dec6b7;
+}

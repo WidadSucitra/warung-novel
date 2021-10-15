@@ -7,16 +7,16 @@
  $server = new nusoap_server();
 
 /* Fetch 1 book data */
-function fetchBookData($isbn){
+function fetchBookData($title){
 
   global $dbconn;
 
-  $sql = "SELECT id, title, author_name, price, isbn, category FROM books where isbn = :isbn";
+  $sql = "SELECT id, title, author_name, price, isbn, category FROM books where title = :title";
 
   // prepare sql and bind parameters
     $stmt = $dbconn->prepare($sql);
 
-    $stmt->bindParam(':isbn', $isbn);
+    $stmt->bindParam(':title', $title);
 
     // insert a row
     $stmt->execute();
@@ -32,7 +32,7 @@ function fetchBookData($isbn){
 $server->configureWSDL('booksServer', 'urn:book');
 
 $server->register('fetchBookData',
-      array('isbn' => 'xsd:string'),  //parameter
+      array('title' => 'xsd:string'),  //parameter
       array('data' => 'xsd:string'),  //output
       'urn:book',   //namespace
       'urn:book#fetchBookData' //soapaction
